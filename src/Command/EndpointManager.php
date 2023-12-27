@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Endpoint;
 use App\Service\EndpointService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -20,6 +21,11 @@ class EndpointManager extends Command
     private  RouterInterface $router;
     private EndpointService $endpointService;
 
+    /**
+     * @var array<Endpoint>
+     */
+    private array $endpoints = [];
+
     public function __construct(RouterInterface $router, EndpointService $endpointService)
     {
         $this->router = $router;
@@ -29,9 +35,23 @@ class EndpointManager extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->endpoints = [];
+
         foreach ($this->router->getRouteCollection()->all() as $route) {
-            $output->writeln($route->getRequirements());
+
+            if (str_starts_with($route->getPath(), "/api")){
+//                $ep = new Endpoint();
+//
+//                $ep->method = "";
+//                $ep->route = $route->getPath();
+//                $ep->setDatetime();
+//
+//                $this->endpoints[] = $ep;
+            }
+
         }
+
+        $this->endpointService->saveOrUpdateEndpoint($this->endpoints);
 
         return Command::SUCCESS;
     }
