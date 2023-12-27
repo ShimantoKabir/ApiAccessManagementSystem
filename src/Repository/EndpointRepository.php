@@ -20,11 +20,12 @@ interface EndpointRepository
      * @param string $method
      * @return Endpoint|null
      */
-    function findByEndpointAndMethod(string $endpoint, string $method) : ?Endpoint;
+    function findByRouteAndMethod(string $endpoint, string $method) : ?Endpoint;
 
     /**
      * @param Endpoint $endpoint
-     * @return Endpoint
+     * @param int $id
+     * @return Endpoint|null
      */
-    function update(Endpoint $endpoint) : Endpoint;
+    function update(Endpoint $endpoint, int $id) : ?Endpoint;
 }

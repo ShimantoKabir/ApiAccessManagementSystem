@@ -11,22 +11,28 @@ class Endpoint
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private int $id;
+    public int $id;
 
     #[ORM\Column(length: 255)]
-    private string $route;
+    public string $route;
 
     #[ORM\Column(length: 255)]
-    private string $method;
+    public string $method;
 
     #[ORM\Column(type: 'datetime')]
-    protected DateTime $createdAt;
+    public DateTime $createdAt;
 
     #[ORM\Column(type: 'datetime')]
-    protected DateTime $updatedAt;
+    public DateTime $updatedAt;
 
     public function setUpdatedAt(): void
     {
         $this->updatedAt->modify("now");
+    }
+
+    public function setDatetime(): void
+    {
+        $this->updatedAt->modify("now");
+        $this->createdAt->modify("now");
     }
 }

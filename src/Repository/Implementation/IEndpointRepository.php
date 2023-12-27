@@ -3,7 +3,6 @@
 namespace App\Repository\Implementation;
 
 use App\Entity\Endpoint;
-use App\Entity\User;
 use App\Repository\EndpointRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -29,7 +28,10 @@ class IEndpointRepository implements EndpointRepository
      */
     function save(Endpoint $endpoint): Endpoint
     {
-        $this->save($endpoint);
+        $this->entityManager->persist($endpoint);;
+        $this->entityManager->flush();
+
+        return $endpoint;
     }
 
     /**
@@ -37,17 +39,34 @@ class IEndpointRepository implements EndpointRepository
      * @param string $method
      * @return Endpoint|null
      */
-    function findByEndpointAndMethod(string $endpoint, string $method): ?Endpoint
+    function findByRouteAndMethod(string $endpoint, string $method): ?Endpoint
     {
-        // TODO: Implement findByEndpointAndMethod() method.
+        return $this->entityRepository->findOneBy([
+            'endpoint' => $endpoint,
+            'method' => $method,
+        ]);
     }
 
     /**
      * @param Endpoint $endpoint
-     * @return Endpoint
+     * @param int $id
+     * @return Endpoint|null
      */
-    function update(Endpoint $endpoint): Endpoint
+    function update(Endpoint $endpoint, int $id): ?Endpoint
     {
-        // TODO: Implement update() method.
+        $existEndpoint = $this->entityRepository->find($id);
+
+        if ($existEndpoint == null){
+            return null;
+        }
+
+        $existEndpoint->route = $endpoint->route;
+        $existEndpoint->method = $endpoint->method;
+        $endpoint->setDatetime();
+
+        $this->entityManager->persist($existEndpoint);;
+        $this->entityManager->flush();
+
+        return $existEndpoint;
     }
 }

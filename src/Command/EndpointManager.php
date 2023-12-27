@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Service\EndpointService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,10 +18,12 @@ use Symfony\Component\Routing\RouterInterface;
 class EndpointManager extends Command
 {
     private  RouterInterface $router;
+    private EndpointService $endpointService;
 
-    public function __construct(RouterInterface $router)
+    public function __construct(RouterInterface $router, EndpointService $endpointService)
     {
         $this->router = $router;
+        $this->endpointService = $endpointService;
         parent::__construct();
     }
 
