@@ -16,11 +16,11 @@ interface EndpointRepository
     function save(Endpoint $endpoint) : Endpoint;
 
     /**
-     * @param string $endpoint
+     * @param string $route
      * @param string $method
      * @return Endpoint|null
      */
-    function findByRouteAndMethod(string $endpoint, string $method) : ?Endpoint;
+    function findByRouteAndMethod(string $route, string $method) : ?Endpoint;
 
     /**
      * @param Endpoint $endpoint

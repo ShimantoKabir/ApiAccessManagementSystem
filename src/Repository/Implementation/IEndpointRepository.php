@@ -4,6 +4,7 @@ namespace App\Repository\Implementation;
 
 use App\Entity\Endpoint;
 use App\Repository\EndpointRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -35,14 +36,14 @@ class IEndpointRepository implements EndpointRepository
     }
 
     /**
-     * @param string $endpoint
+     * @param string $route
      * @param string $method
      * @return Endpoint|null
      */
-    function findByRouteAndMethod(string $endpoint, string $method): ?Endpoint
+    function findByRouteAndMethod(string $route, string $method): ?Endpoint
     {
         return $this->entityRepository->findOneBy([
-            'endpoint' => $endpoint,
+            'route' => $route,
             'method' => $method,
         ]);
     }
@@ -60,9 +61,9 @@ class IEndpointRepository implements EndpointRepository
             return null;
         }
 
-        $existEndpoint->route = $endpoint->route;
-        $existEndpoint->method = $endpoint->method;
-        $endpoint->setDatetime();
+        $existEndpoint->setRoute($endpoint->getRoute());
+        $existEndpoint->setMethod($endpoint->getMethod());
+        $endpoint->setUpdatedAt(new DateTime());
 
         $this->entityManager->persist($existEndpoint);;
         $this->entityManager->flush();

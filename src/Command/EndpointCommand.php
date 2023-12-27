@@ -16,15 +16,10 @@ use Symfony\Component\Routing\RouterInterface;
     aliases: ['app:endpoint'],
     hidden: false
 )]
-class EndpointManager extends Command
+class EndpointCommand extends Command
 {
     private  RouterInterface $router;
     private EndpointService $endpointService;
-
-    /**
-     * @var array<Endpoint>
-     */
-    private array $endpoints = [];
 
     public function __construct(RouterInterface $router, EndpointService $endpointService)
     {
@@ -35,23 +30,22 @@ class EndpointManager extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->endpoints = [];
+        $endpoints = [];
 
         foreach ($this->router->getRouteCollection()->all() as $route) {
+            if (str_starts_with($route->getPath(), "/api") && count($route->getMethods()) > 0){
+                $ep = new Endpoint();
 
-            if (str_starts_with($route->getPath(), "/api")){
-//                $ep = new Endpoint();
-//
-//                $ep->method = "";
-//                $ep->route = $route->getPath();
-//                $ep->setDatetime();
-//
-//                $this->endpoints[] = $ep;
+                $ep->setMethod(json_encode($route->getMethods()));
+                $ep->setRoute($route->getPath());
+
+                $endpoints[] = $ep;
             }
-
         }
 
-        $this->endpointService->saveOrUpdateEndpoint($this->endpoints);
+        // $output->writeln(json_encode($this->endpoints));
+
+        $this->endpointService->saveOrUpdateEndpoint($endpoints);
 
         return Command::SUCCESS;
     }

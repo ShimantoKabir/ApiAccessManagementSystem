@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Endpoint;
 use App\Repository\EndpointRepository;
+use Psr\Log\LoggerInterface;
 
 /**
  *
@@ -15,10 +16,12 @@ class EndpointService
      * @var EndpointRepository
      */
     private EndpointRepository $endpointRepository;
+    private LoggerInterface $logger;
 
-    public function __construct(EndpointRepository $endpointRepository)
+    public function __construct(EndpointRepository $endpointRepository, LoggerInterface $logger)
     {
         $this->endpointRepository = $endpointRepository;
+        $this->logger = $logger;
     }
 
     /**
@@ -28,15 +31,15 @@ class EndpointService
     public function saveOrUpdateEndpoint(array $endpoints): void
     {
         foreach ($endpoints as $endpoint){
-            $endpoint = $this->endpointRepository->findByRouteAndMethod(
-                $endpoint->route,
-                $endpoint->method
+            $existEndpoint = $this->endpointRepository->findByRouteAndMethod(
+                $endpoint->getRoute(),
+                $endpoint->getMethod()
             );
 
-            if ($endpoint == null){
+            if ($existEndpoint == null){
                 $this->endpointRepository->save($endpoint);
             }else{
-                $this->endpointRepository->update($endpoint, $endpoint->id);
+                $this->endpointRepository->update($existEndpoint, $existEndpoint->getId());
             }
         }
     }
