@@ -5,9 +5,9 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
 class Group
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -17,5 +17,5 @@ class Group
     private string $label;
 
 
-
+    
 }

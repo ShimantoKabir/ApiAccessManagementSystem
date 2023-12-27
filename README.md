@@ -1,2 +1,2 @@
 # ApiAccessManagementSystem
-A role and endpoint based API access management system.
+A role and action based API access management system.

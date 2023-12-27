@@ -2,8 +2,8 @@
 
 namespace App\Command;
 
-use App\Entity\Endpoint;
-use App\Service\EndpointService;
+use App\Entity\Action;
+use App\Service\ActionService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,41 +11,41 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 #[AsCommand(
-    name: 'app:create-or-update-endpoint',
-    description: 'Creates or update endpoint',
-    aliases: ['app:endpoint'],
+    name: 'app:manage-action',
+    description: 'Creates or update action',
+    aliases: ['app:action'],
     hidden: false
 )]
-class EndpointCommand extends Command
+class ActionCommand extends Command
 {
     private  RouterInterface $router;
-    private EndpointService $endpointService;
+    private ActionService $actionService;
 
-    public function __construct(RouterInterface $router, EndpointService $endpointService)
+    public function __construct(RouterInterface $router, ActionService $actionService)
     {
         $this->router = $router;
-        $this->endpointService = $endpointService;
+        $this->actionService = $actionService;
         parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $endpoints = [];
+        $actions = [];
 
         foreach ($this->router->getRouteCollection()->all() as $route) {
             if (str_starts_with($route->getPath(), "/api") && count($route->getMethods()) > 0){
-                $ep = new Endpoint();
+                $action = new Action();
 
-                $ep->setMethod(json_encode($route->getMethods()));
-                $ep->setRoute($route->getPath());
+                $action->setMethod(json_encode($route->getMethods()));
+                $action->setRoute($route->getPath());
 
-                $endpoints[] = $ep;
+                $actions[] = $action;
             }
         }
 
-        // $output->writeln(json_encode($this->endpoints));
+        // $output->writeln(json_encode($this->actions));
 
-        $this->endpointService->saveOrUpdateEndpoint($endpoints);
+        $this->actionService->saveOrUpdateAction($actions);
 
         return Command::SUCCESS;
     }
