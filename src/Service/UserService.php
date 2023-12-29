@@ -25,6 +25,8 @@ class UserService
      */
     public function registration(User $user): ?User
     {
+        $unHashedPassword = $user->getPassword();
+
         $existUser = $this->userRepository->findByEmail($user->getEmail());
 
         if ($existUser != null){
@@ -32,7 +34,11 @@ class UserService
         }
 
         $user->setPassword($this->secureHasher->hash($user->getPassword()));
-        return $this->userRepository->saveUser($user);
+
+        $savedUser = $this->userRepository->saveUser($user);
+        $savedUser->setPassword($unHashedPassword);
+
+        return $savedUser;
     }
 
     /**

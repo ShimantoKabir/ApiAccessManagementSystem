@@ -18,7 +18,6 @@ interface UserRepository
      */
     function saveUser(User $user) : ?User;
 
-
     /**
      * @return array<User>
      */
