@@ -4,9 +4,7 @@ namespace App\Repository\Implementation;
 
 use App\Entity\Action;
 use App\Entity\Group;
-use App\Entity\User;
 use App\Repository\GroupRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -37,17 +35,14 @@ class IGroupRepository implements GroupRepository
      */
     function saveGroup(Group $group): ?Group
     {
-//        foreach ($group->getActions() as $action){
-//            $this->entityManager->persist($action);
+//        foreach ($group->getActionList() as $action){
+//            $group->getActions()->add($action);
 //        }
-
-        // dd($group->getCreatedAt());
-
-        $now = new DateTime();
-        $group->setCreatedAt($now);
-        $group->setUpdatedAt($now);
+//
+        dd($group);
 
         $this->entityManager->persist($group);
+
         $this->entityManager->flush();
 
         return $group;

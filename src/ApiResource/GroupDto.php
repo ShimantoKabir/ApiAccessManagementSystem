@@ -5,7 +5,6 @@ namespace App\ApiResource;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\Controller\GroupController;
-use DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Type;
@@ -34,17 +33,7 @@ class GroupDto
     public string $label;
 
     /**
-     * @var array<int>
+     * @var array<ActionDto>
      */
-    public array $actionIds;
-
-    /**
-     * @var DateTime
-     */
-    public DateTime $createdAt;
-
-    /**
-     * @var DateTime
-     */
-    public DateTime $updatedAt;
+    public array $actionList;
 }

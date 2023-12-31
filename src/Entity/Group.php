@@ -11,14 +11,23 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 
+/**
+ *
+ */
 #[ORM\Entity]
 class Group
 {
+    /**
+     * @var int
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
+    /**
+     * @var string
+     */
     #[ORM\Column(length: 255)]
     private string $label;
 
@@ -47,9 +56,9 @@ class Group
     /**
      * Ignored property
      *
-     * @var array<int>
+     * @var array<Action>
      */
-    public array $actionIds;
+    public array $actionList;
 
     /**
      * @return int
@@ -131,12 +140,27 @@ class Group
         $this->actions = $actions;
     }
 
+    /**
+     * @return Action[]
+     */
+    public function getActionList(): array
+    {
+        return $this->actionList;
+    }
+
+    /**
+     * @param array<Action> $actionList
+     * @return void
+     */
+    public function setActionList(array $actionList): void
+    {
+        $this->actionList = $actionList;
+    }
+
     public function __construct()
     {
-        $now = new DateTime();
-
-        $this->createdAt = $now;
-        $this->updatedAt = $now;
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
 
         $this->actions = new ArrayCollection();
     }

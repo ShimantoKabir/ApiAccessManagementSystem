@@ -70,4 +70,9 @@ class IActionRepository implements ActionRepository
 
         return $existAction;
     }
+
+    function findById(int $id): ?Action
+    {
+        return $this->entityRepository->find($id);
+    }
 }

@@ -28,4 +28,10 @@ interface ActionRepository
      * @return Action|null
      */
     function update(Action $action, int $id) : ?Action;
+
+    /**
+     * @param int $id
+     * @return Action|null
+     */
+    function findById(int $id): ?Action;
 }
