@@ -59,9 +59,9 @@ class Alliance
     /**
      * Ignored property
      *
-     * @var array<Action>
+     * @var array<int>
      */
-    public array $actionList;
+    public array $actionIds;
 
     /**
      * @return int
@@ -144,29 +144,29 @@ class Alliance
     }
 
     /**
-     * @return Action[]
+     * @return array
      */
-    public function getActionList(): array
+    public function getActionIds(): array
     {
-        return $this->actionList;
+        return $this->actionIds;
     }
 
     /**
-     * @param array<Action> $actionList
-     * @return void
+     * @param array $actionIds
      */
-    public function setActionList(array $actionList): void
+    public function setActionIds(array $actionIds): void
     {
-        $this->actionList = $actionList;
+        $this->actionIds = $actionIds;
     }
 
     public function addAction(Action $action): void
     {
-        $this->actions[] = $action;
+        $this->actions->add($action);
     }
 
     public function __construct()
     {
         $this->actions = new ArrayCollection();
+        $this->actionIds = array();
     }
 }

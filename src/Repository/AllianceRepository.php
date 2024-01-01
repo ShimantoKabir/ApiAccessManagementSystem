@@ -14,7 +14,7 @@ interface AllianceRepository
      * @param int $id
      * @return Alliance|null
      */
-    function fetchAlliance(int $id): ?Alliance;
+    function findById(int $id): ?Alliance;
 
     /**
      * @param Alliance $alliance

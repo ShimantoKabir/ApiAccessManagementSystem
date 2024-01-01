@@ -3,6 +3,7 @@
 namespace App\ApiResource;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\Controller\AllianceController;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -15,6 +16,12 @@ use Symfony\Component\Validator\Constraints\Type;
         controller: AllianceController::class,
         shortName: "Alliance",
         name: "save-alliance"
+    ),
+    new Get(
+        uriTemplate: '/api/alliances/{id}',
+        controller: AllianceController::class,
+        shortName: "Alliance",
+        name: "fetch-alliance"
     )
 ])]
 class AllianceDto
@@ -33,7 +40,7 @@ class AllianceDto
     public string $label;
 
     /**
-     * @var array<ActionDto>
+     * @var array<int>
      */
-    public array $actionList;
+    public array $actionIds;
 }

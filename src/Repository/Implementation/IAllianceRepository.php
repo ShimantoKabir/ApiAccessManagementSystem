@@ -4,6 +4,7 @@ namespace App\Repository\Implementation;
 
 use App\Entity\Action;
 use App\Entity\Alliance;
+use App\Repository\ActionRepository;
 use App\Repository\AllianceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -12,11 +13,13 @@ class IAllianceRepository implements AllianceRepository
 {
     private EntityManagerInterface $entityManager;
     private EntityRepository $entityRepository;
+    private ActionRepository $actionRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, ActionRepository $actionRepository)
     {
         $this->entityManager = $entityManager;
         $this->entityRepository = $this->entityManager->getRepository(Alliance::class);
+        $this->actionRepository = $actionRepository;
     }
 
 
@@ -24,7 +27,7 @@ class IAllianceRepository implements AllianceRepository
      * @param int $id
      * @return Alliance|null
      */
-    function fetchAlliance(int $id): ?Alliance
+    function findById(int $id): ?Alliance
     {
         return $this->entityRepository->find($id);
     }
@@ -35,8 +38,8 @@ class IAllianceRepository implements AllianceRepository
      */
     function saveAlliance(Alliance $alliance): ?Alliance
     {
-        foreach ($alliance->getActionList() as $action){
-            $alliance->addAction($action);
+        foreach ($alliance->getActionIds() as $id){
+            $alliance->addAction($this->actionRepository->findById($id));
         }
 
         $this->entityManager->persist($alliance);

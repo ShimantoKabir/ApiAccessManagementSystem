@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 #[AsCommand(
-    name: 'app:manage-action',
+    name: 'action:seed',
     description: 'Creates or update action',
     aliases: ['app:action'],
     hidden: false

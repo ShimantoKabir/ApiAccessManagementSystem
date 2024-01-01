@@ -29,12 +29,17 @@ class AllianceService
      */
     public function saveAlliance(Alliance $alliance) : Alliance
     {
-        $group = $this->allianceRepository->saveAlliance($alliance);
+        $existAlliance = $this->allianceRepository->saveAlliance($alliance);
 
-        if ($group == null){
+        if ($existAlliance == null){
             throw new Exception("Can't save the group!");
         }
 
-        return $group;
+        return $existAlliance;
+    }
+
+    public function fetchAllianceById(int $id) : Alliance
+    {
+        return $this->allianceRepository->findById($id);
     }
 }

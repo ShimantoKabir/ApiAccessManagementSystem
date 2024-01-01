@@ -33,4 +33,11 @@ class AllianceController extends AbstractController
         $group = $this->alliancesService->saveAlliance($this->allianceMapper->dtoToEntity($allianceDto));
         return $this->json($group);
     }
+
+    #[Route('/api/alliances/{id}', name: 'fetch-alliance', methods: "GET")]
+    public function fetchAllianceById(int $id): JsonResponse
+    {
+        $alliance = $this->alliancesService->fetchAllianceById($id);
+        return $this->json($alliance);
+    }
 }
