@@ -3,37 +3,37 @@
 namespace App\Repository;
 
 use App\Entity\Action;
-use App\Entity\Group;
+use App\Entity\Alliance;
 
 /**
  *
  */
-interface GroupRepository
+interface AllianceRepository
 {
     /**
      * @param int $id
-     * @return Group|null
+     * @return Alliance|null
      */
-    function fetchGroup(int $id): ?Group;
+    function fetchAlliance(int $id): ?Alliance;
 
     /**
-     * @param Group $group
-     * @return Group|null
+     * @param Alliance $alliance
+     * @return Alliance|null
      */
-    function saveGroup(Group $group): ?Group;
+    function saveAlliance(Alliance $alliance): ?Alliance;
 
     /**
-     * @param Group $group
+     * @param Alliance $alliance
      * @param int $id
-     * @return Group|null
+     * @return Alliance|null
      */
-    function updateGroup(Group $group, int $id): ?Group;
+    function updateAlliance(Alliance $alliance, int $id): ?Alliance;
 
     /**
      * @param int $id
      * @return bool
      */
-    function deleteGroup(int $id): bool;
+    function deleteAlliance(int $id): bool;
 
     /**
      * @param Action $action

@@ -63,7 +63,6 @@ class IActionRepository implements ActionRepository
 
         $existAction->setRoute($action->getRoute());
         $existAction->setMethod($action->getMethod());
-        $action->setUpdatedAt(new DateTime());
 
         $this->entityManager->persist($existAction);;
         $this->entityManager->flush();

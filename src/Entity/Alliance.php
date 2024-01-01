@@ -10,12 +10,13 @@ use Doctrine\ORM\Mapping\InverseJoinColumn;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  *
  */
 #[ORM\Entity]
-class Group
+class Alliance
 {
     /**
      * @var int
@@ -35,8 +36,8 @@ class Group
      * Many Groups have Many Actions.
      * @var Collection<int, Action>
      */
-    #[JoinTable(name: 'groups_actions')]
-    #[JoinColumn(name: 'group_id', referencedColumnName: 'id')]
+    #[JoinTable(name: 'alliances_actions')]
+    #[JoinColumn(name: 'alliance_id', referencedColumnName: 'id')]
     #[InverseJoinColumn(name: 'action_id', referencedColumnName: 'id', unique: true)]
     #[ManyToMany(targetEntity: Action::class)]
     private Collection $actions;
@@ -44,12 +45,14 @@ class Group
     /**
      * @var DateTime
      */
+    #[Gedmo\Timestampable(on: "create")]
     #[ORM\Column(type: "datetime")]
     private DateTime $createdAt;
 
     /**
      * @var DateTime
      */
+    #[Gedmo\Timestampable()]
     #[ORM\Column(type: "datetime")]
     private DateTime $updatedAt;
 
@@ -157,11 +160,13 @@ class Group
         $this->actionList = $actionList;
     }
 
+    public function addAction(Action $action): void
+    {
+        $this->actions[] = $action;
+    }
+
     public function __construct()
     {
-        $this->createdAt = new DateTime();
-        $this->updatedAt = new DateTime();
-
         $this->actions = new ArrayCollection();
     }
 }

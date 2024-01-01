@@ -2,15 +2,15 @@
 
 namespace App\Mapper;
 
-use App\ApiResource\GroupDto;
-use App\Entity\Group;
+use App\ApiResource\AllianceDto;
+use App\Entity\Alliance;
 use App\Repository\ActionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-class GroupMapper
+class AllianceMapper
 {
     private Serializer $serializer;
     private ActionRepository $actionRepository;
@@ -21,10 +21,10 @@ class GroupMapper
         $this->actionRepository = $actionRepository;
     }
 
-    public function dtoToEntity(GroupDto $groupDto) : Group
+    public function dtoToEntity(AllianceDto $groupDto) : Alliance
     {
         $json = $this->serializer->serialize($groupDto, 'json');
-        return $this->serializer->deserialize($json, Group::class, 'json');
+        return $this->serializer->deserialize($json, Alliance::class, 'json');
     }
 
 }

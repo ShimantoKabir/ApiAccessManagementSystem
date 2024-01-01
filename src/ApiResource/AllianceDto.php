@@ -4,20 +4,20 @@ namespace App\ApiResource;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
-use App\Controller\GroupController;
+use App\Controller\AllianceController;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Type;
 
 #[ApiResource(operations: [
     new Post(
-        uriTemplate: '/api/groups',
-        controller: GroupController::class,
-        shortName: "Group",
-        name: "save-group"
+        uriTemplate: '/api/alliances',
+        controller: AllianceController::class,
+        shortName: "Alliance",
+        name: "save-alliance"
     )
 ])]
-class GroupDto
+class AllianceDto
 {
     /**
      * @var int

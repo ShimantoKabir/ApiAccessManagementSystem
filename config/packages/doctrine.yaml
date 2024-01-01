@@ -22,6 +22,11 @@ doctrine:
                 prefix: 'App\Entity'
                 alias: App
 
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable: true
+
 when@test:
     doctrine:
         dbal:

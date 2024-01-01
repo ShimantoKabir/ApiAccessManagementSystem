@@ -3,12 +3,12 @@
 namespace App\Repository\Implementation;
 
 use App\Entity\Action;
-use App\Entity\Group;
-use App\Repository\GroupRepository;
+use App\Entity\Alliance;
+use App\Repository\AllianceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
-class IGroupRepository implements GroupRepository
+class IAllianceRepository implements AllianceRepository
 {
     private EntityManagerInterface $entityManager;
     private EntityRepository $entityRepository;
@@ -16,44 +16,41 @@ class IGroupRepository implements GroupRepository
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->entityRepository = $this->entityManager->getRepository(Group::class);
+        $this->entityRepository = $this->entityManager->getRepository(Alliance::class);
     }
 
 
     /**
      * @param int $id
-     * @return Group|null
+     * @return Alliance|null
      */
-    function fetchGroup(int $id): ?Group
+    function fetchAlliance(int $id): ?Alliance
     {
         return $this->entityRepository->find($id);
     }
 
     /**
-     * @param Group $group
-     * @return Group|null
+     * @param Alliance $alliance
+     * @return Alliance|null
      */
-    function saveGroup(Group $group): ?Group
+    function saveAlliance(Alliance $alliance): ?Alliance
     {
-//        foreach ($group->getActionList() as $action){
-//            $group->getActions()->add($action);
-//        }
-//
-        dd($group);
+        foreach ($alliance->getActionList() as $action){
+            $alliance->addAction($action);
+        }
 
-        $this->entityManager->persist($group);
-
+        $this->entityManager->persist($alliance);
         $this->entityManager->flush();
 
-        return $group;
+        return $alliance;
     }
 
     /**
-     * @param Group $group
+     * @param Alliance $alliance
      * @param int $id
-     * @return Group|null
+     * @return Alliance|null
      */
-    function updateGroup(Group $group, int $id): ?Group
+    function updateAlliance(Alliance $alliance, int $id): ?Alliance
     {
         // TODO: Implement updateGroup() method.
     }
@@ -62,7 +59,7 @@ class IGroupRepository implements GroupRepository
      * @param int $id
      * @return bool
      */
-    function deleteGroup(int $id): bool
+    function deleteAlliance(int $id): bool
     {
         // TODO: Implement deleteGroup() method.
     }

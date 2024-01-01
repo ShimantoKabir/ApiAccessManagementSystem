@@ -36,7 +36,7 @@ class ActionCommand extends Command
             if (str_starts_with($route->getPath(), "/api") && count($route->getMethods()) > 0){
                 $action = new Action();
 
-                $action->setMethod(json_encode($route->getMethods()));
+                $action->setMethod(substr(json_encode($route->getMethods()), 2, -2));
                 $action->setRoute($route->getPath());
 
                 $actions[] = $action;

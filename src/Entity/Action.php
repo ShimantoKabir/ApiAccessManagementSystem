@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  *
@@ -34,12 +35,14 @@ class Action
     /**
      * @var DateTime
      */
+    #[Gedmo\Timestampable(on: "create")]
     #[ORM\Column(type: "datetime")]
     private DateTime $createdAt;
 
     /**
      * @var DateTime
      */
+    #[Gedmo\Timestampable()]
     #[ORM\Column(type: "datetime")]
     private DateTime $updatedAt;
 
@@ -126,13 +129,5 @@ class Action
     public function setUpdatedAt(DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
-    }
-
-    public function __construct()
-    {
-        $now = new DateTime();
-
-        $this->createdAt = $now;
-        $this->updatedAt = $now;
     }
 }
