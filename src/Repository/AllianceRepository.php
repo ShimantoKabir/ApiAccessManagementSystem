@@ -39,11 +39,5 @@ interface AllianceRepository
      * @param Action $action
      * @return Action|null
      */
-    function removeAction(Action $action): ?Action;
-
-    /**
-     * @param Action $action
-     * @return Action|null
-     */
     function addAction(Action $action): ?Action;
 }

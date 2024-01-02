@@ -4,7 +4,6 @@ namespace App\Repository\Implementation;
 
 use App\Entity\Action;
 use App\Entity\Alliance;
-use App\Repository\ActionRepository;
 use App\Repository\AllianceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -13,13 +12,11 @@ class IAllianceRepository implements AllianceRepository
 {
     private EntityManagerInterface $entityManager;
     private EntityRepository $entityRepository;
-    private ActionRepository $actionRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, ActionRepository $actionRepository)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->entityRepository = $this->entityManager->getRepository(Alliance::class);
-        $this->actionRepository = $actionRepository;
     }
 
 
@@ -38,10 +35,6 @@ class IAllianceRepository implements AllianceRepository
      */
     function saveAlliance(Alliance $alliance): ?Alliance
     {
-        foreach ($alliance->getActionIds() as $id){
-            $alliance->addAction($this->actionRepository->findById($id));
-        }
-
         $this->entityManager->persist($alliance);
         $this->entityManager->flush();
 
@@ -65,15 +58,6 @@ class IAllianceRepository implements AllianceRepository
     function deleteAlliance(int $id): bool
     {
         // TODO: Implement deleteGroup() method.
-    }
-
-    /**
-     * @param Action $action
-     * @return Action|null
-     */
-    function removeAction(Action $action): ?Action
-    {
-        // TODO: Implement removeAction() method.
     }
 
     /**

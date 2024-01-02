@@ -23,4 +23,10 @@ class AllianceMapper
         return $this->serializer->deserialize($json, Alliance::class, 'json');
     }
 
+    public function entityToDto(Alliance $alliance) : AllianceDto
+    {
+        $json = $this->serializer->serialize($alliance, 'json');
+        return $this->serializer->deserialize($json, AllianceDto::class, 'json');
+    }
+
 }

@@ -38,7 +38,7 @@ class Alliance
      */
     #[JoinTable(name: 'alliances_actions')]
     #[JoinColumn(name: 'alliance_id', referencedColumnName: 'id')]
-    #[InverseJoinColumn(name: 'action_id', referencedColumnName: 'id', unique: true)]
+    #[InverseJoinColumn(name: 'action_id', referencedColumnName: 'id')]
     #[ManyToMany(targetEntity: Action::class)]
     private Collection $actions;
 
@@ -162,6 +162,11 @@ class Alliance
     public function addAction(Action $action): void
     {
         $this->actions->add($action);
+    }
+
+    public function removeAction(Action $action): void
+    {
+        $this->actions->removeElement($action);
     }
 
     public function __construct()

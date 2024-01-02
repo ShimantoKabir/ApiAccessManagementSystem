@@ -3,42 +3,39 @@
 namespace App\ApiResource;
 
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Patch;
 use App\Controller\AllianceController;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotEqualTo;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Type;
 
 #[ApiResource(operations: [
-    new Post(
-        uriTemplate: '/api/alliances',
+    new Delete(
+        uriTemplate: '/api/alliances/actions',
         controller: AllianceController::class,
-        shortName: "Alliance",
-        name: "save-alliance"
+        shortName: "AllianceAction",
+        name: "delete-action-from-alliances"
     ),
-    new Get(
-        uriTemplate: '/api/alliances/{id}',
+    new Patch(
+        uriTemplate: '/api/alliances/actions',
         controller: AllianceController::class,
-        shortName: "Alliance",
-        name: "fetch-alliance"
+        shortName: "AllianceAction",
+        name: "add-action-from-alliances"
     )
 ])]
-class AllianceDto
+class AllianceActionDto
 {
     /**
      * @var int
      */
-    public int $id = 0;
-
-    /**
-     * @var string
-     */
-    #[NotBlank(message: "Label can't be empty!")]
-    #[Type('string')]
-    #[NotNull(message: "Label can't be null!")]
-    public string $label;
+    #[NotBlank(message: "Id can't be empty!")]
+    #[Type('integer')]
+    #[NotNull(message: "Id can't be null!")]
+    #[NotEqualTo(value: 0)]
+    public int $id;
 
     /**
      * @var array<int>
